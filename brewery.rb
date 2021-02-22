@@ -1,0 +1,3 @@
+class FINDBREWERY::Brewery
+    
+end
