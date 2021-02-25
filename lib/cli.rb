@@ -59,5 +59,19 @@ class FINDBREWERY::CLI
       end
     end
 
+    #--------------------------------------------------------------------------------Question 2--------------------------------
+    def second_question
+      puts ""
+      puts "Which city do you live in?"
+      input = grab_input
+      FINDBREWERY::API.new.get_and_create_city_data(input.split.join("%20"))
+      city_selection(input)
+    end
+    def city_selection(city)
+      puts "Here are the first 10 breweries in your state"
+      breweries = FINDBREWERY::Brewery.find_or_create_by_city(city)
+      display(breweries)
+     end
+
 
 end
