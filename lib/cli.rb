@@ -88,4 +88,15 @@ class FINDBREWERY::CLI
       end
    end
 
+   def display_type(breweries)
+      puts "Here's a list of the breweries near you with the type of beer you like."
+      breweries.each.with_index(1) do |brewery, index|
+         puts ""
+         puts "Name: #{brewery.name}"
+         puts "Website: #{brewery.website_url}"
+         puts "Phone: #{brewery.phone}"
+         puts "Address: #{brewery.street} #{brewery.city}, #{brewery.state} #{brewery.postal_code}"
+         puts ""
+      end
+   end
 end
