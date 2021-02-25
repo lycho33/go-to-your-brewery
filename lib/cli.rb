@@ -14,20 +14,27 @@ class FINDBREWERY::CLI
         puts "Welcome to the Brewery Index!"
         puts ""
         puts "Here we will help you find breweries within your vicinity."
-        #puts "Grabbing Data... Loading..."
      end
 
      def menu
-         # until @input == "exit"
-         #    questionnaire #show state/city/type
-         # end
-         # exit
-         #give the option to go back
-         first_question
-         # second_question
-         # type_of_beer
+            first_question
+            second_question
+            type_of_beer
+            goodbye
      end
 
+     def goodbye
+         puts ""
+         puts "Hope this helped you and make sure to check out those breweries!"
+         puts ""
+         puts "Would you like to see more breweries in other states or cities?"
+         puts "If so, please type menu. If not, please type exit"
+         if grab_input == "exit"
+            exit
+         else
+            menu
+         end
+      end
 #-------------------------------------------------------------------------------------Question 1------------------------------
      def first_question
       puts "Which state do you reside in?"
@@ -38,7 +45,7 @@ class FINDBREWERY::CLI
      end
 
      def state_selection(state)
-      puts "Here are the first 5 breweries in your state"
+      puts "Here are examples of the first 5 breweries in your state" #here examples
       breweries = FINDBREWERY::Brewery.find_or_create_by_state_or_city(state)
       display(breweries)
      end
@@ -54,12 +61,8 @@ class FINDBREWERY::CLI
             return state.split.join("%20")
          end
             return state
-      if @input == "exit"
-         exit
-      end
     end
-
-    #--------------------------------------------------------------------------------Question 2--------------------------------
+#--------------------------------------------------------------------------------Question 2--------------------------------
     def second_question
       puts ""
       puts "Which city do you live in?"
@@ -68,7 +71,7 @@ class FINDBREWERY::CLI
       city_selection(input)
     end
     def city_selection(city)
-      puts "Here are the first 10 breweries in your state"
+      puts "Here are examples of the first 5 breweries in your state"
       breweries = FINDBREWERY::Brewery.find_or_create_by_city(city)
       display(breweries)
      end
@@ -76,16 +79,17 @@ class FINDBREWERY::CLI
    def type_of_beer
       puts ""
       puts "Now that we know where you're located. Use the up or down arrow key to....."
+     
       prompt = TTY::Prompt.new
       select_input = prompt.select("Select the type of beer you like.", display_all)
       brewery = FINDBREWERY::Brewery.find_type_of_beer(select_input)
-
+      display_type(brewery)
    end
    
    def display_all
       FINDBREWERY::Brewery.all.collect do |brewery|
          brewery.brewery_type
-      end
+      end.uniq
    end
 
    def display_type(breweries)
