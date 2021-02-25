@@ -45,14 +45,13 @@ class FINDBREWERY::CLI
      end
 
      def state_selection(state)
-      puts "Here are examples of the first 5 breweries in your state" #here examples
+      puts "Here are examples of the first 5 breweries in your state. Now let's figure out what breweries are in your city." 
       breweries = FINDBREWERY::Brewery.find_or_create_by_state_or_city(state)
       display(breweries)
      end
 
      def display(breweries)
       breweries.each.with_index(1) {|brewery, index| puts "#{index}. #{brewery.name}"}
-         #grab_input
       end
 
     def grab_input
@@ -79,21 +78,19 @@ class FINDBREWERY::CLI
    def type_of_beer
       puts ""
       puts "Now that we know where you're located. Use the up or down arrow key to....."
-     
       prompt = TTY::Prompt.new
-      select_input = prompt.select("Select the type of beer you like.", display_all)
+      select_input = prompt.select("Select the type of brewery you like.", display_all)
       brewery = FINDBREWERY::Brewery.find_type_of_beer(select_input)
       display_type(brewery)
    end
    
    def display_all
-      FINDBREWERY::Brewery.all.collect do |brewery|
-         brewery.brewery_type
-      end.uniq
+      FINDBREWERY::Brewery.all.collect  {|brewery| brewery.brewery_type}.uniq
    end
 
    def display_type(breweries)
-      puts "Here's a list of the breweries near you with the type of beer you like."
+      puts "Here's a list of the breweries near you with the type of brewery you like."
+      puts "Note that some types of brewery may not be in your area and will recommend that specific type of brewery in another state or area."
       breweries.each.with_index(1) do |brewery, index|
          puts ""
          puts "Name: #{brewery.name}"

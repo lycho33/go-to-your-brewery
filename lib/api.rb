@@ -8,24 +8,18 @@ class FINDBREWERY::API
     
     def get_and_create_brewery_data 
         brewery_array = HTTParty.get(@url) #returns a hash
-        brewery_array.each do |brewery_hash| 
-            FINDBREWERY::Brewery.new(brewery_hash) #iterates to create each nested hash as an instance 
-        end
+        brewery_array.each {|brewery_hash| FINDBREWERY::Brewery.new(brewery_hash)} #iterates to create each nested hash as an instance 
     end
 
     def get_and_create_state_data(state)
         puts "___----- GRABBED DATA ---______"
-        brewery_array = HTTParty.get(@url + "?by_state=#{state}" + "&per_page=5") #returns a hash
-        brewery_array.each do |brewery_hash| 
-            FINDBREWERY::Brewery.new(brewery_hash) #iterates to create each nested hash as an instance 
-        end
+        brewery_array = HTTParty.get(@url + "?by_state=#{state}" + "&page=5") #returns a hash
+        brewery_array.each {|brewery_hash| FINDBREWERY::Brewery.new(brewery_hash)} #iterates to create each nested hash as an instance 
     end
     
     def get_and_create_city_data(city)
         puts "___----- GRABBED DATA ---______"
-        brewery_array = HTTParty.get(@url + "?by_city=#{city}" + "&per_page=5") #returns a hash
-        brewery_array.each do |brewery_hash| 
-            FINDBREWERY::Brewery.new(brewery_hash) #iterates to create each nested hash as an instance 
-        end
+        brewery_array = HTTParty.get(@url + "?by_city=#{city}" + "&page=5") #returns a hash
+        brewery_array.each {|brewery_hash| FINDBREWERY::Brewery.new(brewery_hash)} #iterates to create each nested hash as an instance 
     end
 end
