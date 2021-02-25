@@ -2,4 +2,6 @@
 
 require_relative "../config/environment"
 
-#FINDBREWERY::CLI.new.run
+FINDBREWERY::CLI.new.run
+
+#FINDBREWERY::API.new.get_brewery_data
