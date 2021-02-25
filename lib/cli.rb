@@ -77,9 +77,17 @@ class FINDBREWERY::CLI
 #---------------------------------------------------------------------Question 3-------------------------------------------
    def type_of_beer
       puts ""
-      puts "Now that we know where you're located. Use the up or down arrow key to....."
+      puts "Now that we know where you're located. We want to help you select the right type of brewery."
+      puts "Here is a list of the types of breweries."
+      puts "1. Micro: A small brewery that brews craft beer."
+      puts "2. Regional: A regional location of an expanded brewery."
+      puts "3. Brewpub: A beer-focused restaurant or restaurant/bar with a brewery on-premise."
+      puts "4. Contract: A brewery that uses another brewery's equipment."
+      puts "5. Planning: A brewery in planning or not yet opened to the public."
+      puts ""
+      puts "Use the up or down arrow key to....."
       prompt = TTY::Prompt.new
-      select_input = prompt.select("Select the type of brewery you like.", display_all)
+      select_input = prompt.select("Select the type of brewery you are looking for.", display_all)
       brewery = FINDBREWERY::Brewery.find_type_of_beer(select_input)
       display_type(brewery)
    end
@@ -89,8 +97,9 @@ class FINDBREWERY::CLI
    end
 
    def display_type(breweries)
-      puts "Here's a list of the breweries near you with the type of brewery you like."
-      puts "Note that some types of brewery may not be in your area and will recommend that specific type of brewery in another state or area."
+      puts "       "
+      puts "Here's a list of breweries near you associated with the type of brewery you like."
+      puts "***Note that some types of brewery may not be in your area and will recommend that specific type of brewery in another state or area."
       breweries.each.with_index(1) do |brewery, index|
          puts ""
          puts "Name: #{brewery.name}"
