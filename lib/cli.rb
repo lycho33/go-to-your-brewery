@@ -73,12 +73,19 @@ class FINDBREWERY::CLI
       display(breweries)
      end
 #---------------------------------------------------------------------Question 3-------------------------------------------
-     def type_of_beer
+   def type_of_beer
       puts ""
       puts "Now that we know where you're located. Use the up or down arrow key to....."
       prompt = TTY::Prompt.new
       select_input = prompt.select("Select the type of beer you like.", display_all)
-    
-  end
+      brewery = FINDBREWERY::Brewery.find_type_of_beer(select_input)
+
+   end
+   
+   def display_all
+      FINDBREWERY::Brewery.all.collect do |brewery|
+         brewery.brewery_type
+      end
+   end
 
 end
