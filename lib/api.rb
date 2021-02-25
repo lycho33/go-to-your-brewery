@@ -20,5 +20,12 @@ class FINDBREWERY::API
             FINDBREWERY::Brewery.new(brewery_hash) #iterates to create each nested hash as an instance 
         end
     end
-
+    
+    def get_and_create_city_data(city)
+        puts "___----- GRABBED DATA ---______"
+        brewery_array = HTTParty.get(@url + "?by_city=#{city}" + "&per_page=5") #returns a hash
+        brewery_array.each do |brewery_hash| 
+            FINDBREWERY::Brewery.new(brewery_hash) #iterates to create each nested hash as an instance 
+        end
+    end
 end
