@@ -31,6 +31,10 @@ class FINDBREWERY::Brewery
         self.all.select {|brewery| brewery.city == new_city}
     end
 
+    def self.find_type_of_beer(type)
+        self.all.select {|brewery| brewery.brewery_type == type}
+    end
+
     def self.all
         @@all
     end
