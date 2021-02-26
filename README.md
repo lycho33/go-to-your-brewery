@@ -12,6 +12,16 @@ Add this line to your application's Gemfile:
 gem 'go-to-your-brewery'
 ```
 
+Add these lines to your application's Gemfile to add the additional gems that help the main gem run
+
+```ruby
+gem 'pry'
+gem 'httparty'
+gem 'colorize'
+gem 'tty-prompt'
+gem 'terminal-table'
+```
+
 And then execute:
 
     $ bundle install

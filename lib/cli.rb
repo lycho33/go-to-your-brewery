@@ -11,7 +11,7 @@ class FINDBREWERY::CLI
 
      def greeting
         puts ""
-        puts "Welcome to the Brewery Index!"
+        puts "Welcome to the Brewery Index!".colorize(:yellow)
         puts ""
         puts "Here we will help you find breweries within your vicinity."
      end
@@ -37,7 +37,7 @@ class FINDBREWERY::CLI
       end
 #-------------------------------------------------------------------------------------Question 1------------------------------
      def first_question
-      puts "Which state do you reside in?"
+      puts "Which state do you reside in?".colorize(:green)
       input = grab_input
       FINDBREWERY::API.new.get_and_create_state_data(input.split.join("_"))
       #if input == #{}  NEED AN ERROR CHECK
@@ -64,7 +64,7 @@ class FINDBREWERY::CLI
 #--------------------------------------------------------------------------------Question 2--------------------------------
     def second_question
       puts ""
-      puts "Which city do you live in?"
+      puts "Which city do you live in?".colorize(:green)
       input = grab_input
       FINDBREWERY::API.new.get_and_create_city_data(input.split.join("%20"))
       city_selection(input)
@@ -79,15 +79,18 @@ class FINDBREWERY::CLI
       puts ""
       puts "Now that we know where you're located. We want to help you select the right type of brewery."
       puts "Here is a list of the types of breweries."
-      puts "1. Micro: A small brewery that brews craft beer."
-      puts "2. Regional: A regional location of an expanded brewery."
-      puts "3. Brewpub: A beer-focused restaurant or restaurant/bar with a brewery on-premise."
-      puts "4. Contract: A brewery that uses another brewery's equipment."
-      puts "5. Planning: A brewery in planning or not yet opened to the public."
+      table = Terminal::Table.new :headings => ['Type', 'Description'] do |t|
+         t << ['Micro', 'A small brewery that brews craft beer.']
+         t.add_row ['Regional', "A regional location of an expanded brewery."]
+         t.add_row ['Brewpub', "A beer-focused restaurant or restaurant/bar with a brewery on-premise."]
+         t.add_row ['Contract', "A brewery that uses another brewery's equipment."]
+         t.add_row ['Planning', "A brewery in planning or not yet opened to the public."]
+       end
+      puts table
       puts ""
       puts "Use the up or down arrow key to....."
       prompt = TTY::Prompt.new
-      select_input = prompt.select("Select the type of brewery you are looking for.", display_all)
+      select_input = prompt.select("Select the type of brewery you are looking for.".colorize(:green), display_all)
       brewery = FINDBREWERY::Brewery.find_type_of_beer(select_input)
       display_type(brewery)
    end
@@ -99,11 +102,11 @@ class FINDBREWERY::CLI
    def display_type(breweries)
       puts "       "
       puts "Here's a list of breweries near you associated with the type of brewery you like."
-      puts "***Note that some types of brewery may not be in your area and will recommend that specific type of brewery in another state or area."
+      puts "***".colorize(:yellow) + "Note that some types of brewery may not be in your area and will recommend that specific type of brewery in another state or area."
       breweries.each.with_index(1) do |brewery, index|
          puts ""
          puts "Name: #{brewery.name}"
-         puts "Website: #{brewery.website_url}"
+         puts "Website: #{brewery.website_url.colorize(:blue)}"
          puts "Phone: #{brewery.phone}"
          puts "Address: #{brewery.street} #{brewery.city}, #{brewery.state} #{brewery.postal_code}"
          puts ""
