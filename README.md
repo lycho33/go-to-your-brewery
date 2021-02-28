@@ -1,44 +1,41 @@
 # Go::To::Your::Brewery
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/go/to/your/brewery`. To experiment with that code, run `bin/console` for an interactive prompt.
+    Welcome! This is a Ruby library that helps you find the right type of brewery in your area. 
 
-TODO: Delete this and the text above, and describe your gem
+## Fork and Clone this Repo
 
-## Installation
+1. Go to this Github website
 
-Add this line to your application's Gemfile:
+    https://github.com/lycho33/go-to-your-brewery
 
+2. Create a Github account. If you already have one, fork this repo
+3. Copy the SSH: git@github.com:lycho33/go-to-your-brewery.git
+4. Enter into your terminal and go to the directory and file you would like to save this repo
 ```ruby
-gem 'go-to-your-brewery'
+    mkdir (make directory)
+    cd (change directories to go to the right directory - file)
 ```
-
-Add these lines to your application's Gemfile to add the additional gems that help the main gem run
-
+5. Clone this repo
+``` ruby
+    git clone [SSH]
+```
+6. Code the repo so it shows up in your VS Code
 ```ruby
-gem 'pry'
-gem 'httparty'
-gem 'colorize'
-gem 'tty-prompt'
-gem 'terminal-table'
+    code go-to-your-brewery
 ```
-
-And then execute:
+And then execute in your terminal:
 
     $ bundle install
 
-Or install it yourself as:
-
-    $ gem install go-to-your-brewery
-
 ## Usage
 
-TODO: Write usage instructions here
+To view how the CLI project works. Please view this video below
+     
+https://youtu.be/_JAmCIlmYdI
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
@@ -52,4 +49,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 Everyone interacting in the Go::To::Your::Brewery project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/go-to-your-brewery/blob/master/CODE_OF_CONDUCT.md).
 
-Extracted from an API
+Extracted from an [API](https://www.openbrewerydb.org/)

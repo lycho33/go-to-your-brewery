@@ -1,34 +1,22 @@
 class FINDBREWERY::Brewery
-    #Where the data is going to be stored
-    @@all = [] #array of objects
-    #attr_accessor :id, :name, :brewery_type
+  
+    @@all = [] 
+    
     def initialize(brewery_hash)
         brewery_hash.each do |key, value|
-            self.class.attr_accessor(key) #created an attr_accessor key (ex. ID)
-            #self.id= 4581/ setter 
-            self.send(("#{key}="), value) #send creates a method #self is an instance of brewery
+            self.class.attr_accessor(key)
+            self.send(("#{key}="), value)
         end
-        @@all << self #object 
+        @@all << self
     end
 
-    def self.find_or_create_by_state_or_city(state)
-        new_state = ""
-        if state.include?("%20")
-            new_state = state.split("%20").map {|x| x.capitalize}.join(" ")
+    def self.find_or_create_by_state(state)
+        if self.all.find {|b| b.state == state} != nil
+            return self.all.each {|b| b.state == state.capitalize}
         else
-            new_state = state.capitalize 
+            FINDBREWERY::API.new.get_and_create_state_data(state.split.join("%20"))
+            return self.all.each {|b| b.state == state.capitalize}
         end
-        self.all.select {|brewery| brewery.state == new_state}
-    end
-
-    def self.find_or_create_by_city(city)
-        new_city = ""
-        if city.include?("%20")
-            new_city = city.split("%20").map {|x| x.capitalize}.join(" ")
-        else
-            new_city = city.capitalize 
-        end
-        self.all.select {|brewery| brewery.city == new_city}
     end
 
     def self.find_type_of_beer(type)
@@ -37,6 +25,7 @@ class FINDBREWERY::Brewery
 
     def self.all
         @@all
+      
     end
 
 end

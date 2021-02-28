@@ -1,11 +1,10 @@
 class FINDBREWERY::CLI
-#get inputs and show string/display 
-   def initialize
-      FINDBREWERY::API.new.get_and_create_brewery_data # Data from API
-   end
+
+attr_accessor :state, :city
 
    def run
       greeting
+      illustration
       menu
    end
 
@@ -13,12 +12,28 @@ class FINDBREWERY::CLI
         puts ""
         puts "Welcome to the Brewery Index!".colorize(:yellow)
         puts ""
-        puts "Here we will help you find breweries within your vicinity."
+        puts "Here we will help you find breweries within your vicinity. Let's find out your local area."
      end
+
+     def illustration
+         puts"
+         .   *   ..  . *  *
+         *  * @()Ooc()*   o  .
+             (Q@*0CG*O()  ___
+            |\_________/|/ _ \
+            |  |  |  |  | / | |
+            |  |  |  |  | | | |
+            |  |  |  |  | | | |
+            |  |  |  |  | \_| |
+            |  |  |  |  |\___/  
+            |\_|__|__|_/|
+             \_________/          
+                                                "
+         puts ""
+       end
 
      def menu
             first_question
-            second_question
             type_of_beer
             goodbye
      end
@@ -39,20 +54,17 @@ class FINDBREWERY::CLI
      def first_question
       puts "Which state do you reside in?".colorize(:green)
       input = grab_input
-      FINDBREWERY::API.new.get_and_create_state_data(input.split.join("_"))
-      #if input == #{}  NEED AN ERROR CHECK
-      state_selection(input)
-     end
-
-     def state_selection(state)
+      FINDBREWERY::Brewery.all.clear
+      breweries = FINDBREWERY::Brewery.find_or_create_by_state(input)
+      puts ""
       puts "Here are examples of the first 5 breweries in your state. Now let's figure out what breweries are in your city." 
-      breweries = FINDBREWERY::Brewery.find_or_create_by_state_or_city(state)
       display(breweries)
+      second_question(breweries)
      end
 
-     def display(breweries)
-      breweries.each.with_index(1) {|brewery, index| puts "#{index}. #{brewery.name}"}
-      end
+     def display(breweries)        
+         breweries.each.with_index(1) {|brewery, index| puts "#{index}. #{brewery.name}"}
+     end
 
     def grab_input
       state = gets.chomp.downcase 
@@ -62,18 +74,14 @@ class FINDBREWERY::CLI
             return state
     end
 #--------------------------------------------------------------------------------Question 2--------------------------------
-    def second_question
+    def second_question(breweries)
       puts ""
       puts "Which city do you live in?".colorize(:green)
       input = grab_input
-      FINDBREWERY::API.new.get_and_create_city_data(input.split.join("%20"))
-      city_selection(input)
+      puts ""
+      puts "Here are examples of the first 5 breweries in your city."
+      display(breweries.each {|b| b.city == input}) 
     end
-    def city_selection(city)
-      puts "Here are examples of the first 5 breweries in your state"
-      breweries = FINDBREWERY::Brewery.find_or_create_by_city(city)
-      display(breweries)
-     end
 #---------------------------------------------------------------------Question 3-------------------------------------------
    def type_of_beer
       puts ""
